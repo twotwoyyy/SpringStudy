@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<bean id="sa1" class="com.sist.main.Sawon"/>
+	<bean id="sa2" class="com.sist.main.Sawon"/>
+	<bean id="sa3" class="com.sist.main.Sawon"/>
+</beans>
