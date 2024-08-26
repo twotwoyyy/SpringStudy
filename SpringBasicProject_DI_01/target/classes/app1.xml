@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 클래스 등록
+		 XML에서 오류 발생 = 전체 오류 
+	 -->
+	<bean id="sa1" class="com.sist.main.Sawon">
+		<property name="sabun"><value>1</value></property>
+		<property name="name"><value>홍길동</value></property>
+		<property name="sex"><value>남자</value></property>
+		<property name="dept"><value>개발부</value></property>
+		<property name="job"><value>사원</value></property>
+		<property name="loc"><value>서울</value></property>
+		<property name="pay"><value>3000</value></property>
+	</bean>
+	<bean id="sa2" class="com.sist.main.Sawon">
+		<property name="sabun" value="1"/>
+		<property name="name" value="심청이"/>
+		<property name="sex" value="여자"/>
+		<property name="dept" value="기획부"/>
+		<property name="job" value="대리"/>
+		<property name="loc" value="경기"/>
+		<property name="pay" value="3500"/>
+	</bean>
+	<!-- 가장 많이 사용 -->
+	<bean id="sa3" class="com.sist.main.Sawon"
+		p:sabun="3"
+		p:name="박문수"
+		p:sex="남자"
+		p:dept="개발부"
+		p:job="대리"
+		p:loc="서울"
+		p:pay="3500"
+	 />
+</beans>

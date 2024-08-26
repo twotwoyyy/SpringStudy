@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="mem1" class="com.sist.main.Member"> <!-- new Member() -->
+		<constructor-arg index="0"><value>1</value></constructor-arg>
+		<constructor-arg index="1"><value>홍길동</value></constructor-arg>
+		<constructor-arg index="2"><value>남자</value></constructor-arg>
+		<constructor-arg index="3"><value>서울</value></constructor-arg>
+		<constructor-arg index="4"><value>1111-1111</value></constructor-arg>
+	</bean>
+	<bean id="mem2" class="com.sist.main.Member"> <!-- new Member() -->
+		<constructor-arg index="0" value="2"/>
+		<constructor-arg index="1" value="심청이"/>
+		<constructor-arg index="2" value="여자"/>
+		<constructor-arg index="3" value="경기"/>
+		<constructor-arg index="4" value="2222-2222"/>
+	</bean>
+	<bean id="mem3" class="com.sist.main.Member"
+		c:mno="3"
+		c:name="박문수"
+		c:sex="남자"
+		c:address="부산"
+		c:phone="3333-3333"
+	/>
+	<bean id="mem4" class="com.sist.main.Member"
+		c:_0="4"
+		c:_1="춘향이"
+		c:_2="여자"
+		c:_3="강원"
+		c:_4="4444-4444"
+	/>
+</beans>

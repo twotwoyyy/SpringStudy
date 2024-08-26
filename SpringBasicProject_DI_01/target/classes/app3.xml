@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 
+		class A{
+			private int a;
+			public A(int a){
+				this.a=a;
+			}
+			public void setA(int a){
+				this.a=a;
+			}
+		}
+	 -->
+	 <!-- 생성자 호출
+	 	  setter에 값을 채운다
+	 	  마지막 값 => 박문수 
+	  -->
+	<bean id="board" class="com.sist.main.Board"
+		c:bno="1"
+		c:name="홍길동"
+		c:subject="게시글입니다 1"
+		
+		p:bno="2"
+		p:name="박문수"
+		p:subject="게시글입니다 2"
+	/>
+
+</beans>
