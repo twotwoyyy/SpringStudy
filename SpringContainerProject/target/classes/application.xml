@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="sa" class="com.sist.spring4.Sawon"
+		p:sabun="1"
+		p:name="홍길동"
+		p:dept="개발부"
+		scope="prototype"
+	/>
+	<!-- default는 singleton, prototype을 주게 되면 메모리가 따로 배정 -->
+	<bean id="sa2" class="com.sist.spring4.Sawon"
+		c:sabun="2"
+		c:name="홍길동"
+		c:dept="영업부"
+	/>
+	<!-- p:변수명 => setter에 값 주입(DI) -->
+	<!-- bean : 클래스 등록 = 스프링에서 관리 
+		 생성 ~ 소멸 
+		 멤버 변수의 초기화 
+		 
+		 p: property의 약자, 초기값 지정
+	 -->
+
+</beans>

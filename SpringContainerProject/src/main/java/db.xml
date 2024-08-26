@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 명령 = 스프링 
+		클래스와 클래스의 연관 관계를 설정 = DI(******)
+		MVC 동작 구조
+		가상돔 / React (단방향 통신 = 값을 받아와야 한다) VS Vue (양방향 통신 = 입력하자마자 값 받아온다)
+	-->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:XE"
+		p:username="hr"
+		p:password="happy"
+	/>
+	<!-- MyBatis 연결 -->
+	<!-- 클래스 객체를 대입할 때만 ref, ref가 없을시 일반 문자열 -->
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+	/>
+	<bean id="mapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="ssf"
+		p:mapperInterface="com.sist.dao.EmpMapper"
+	/>
+	<bean id="dao" class="com.sist.dao.EmpDAO"
+		p:mapper-ref="mapper"
+	/>
+</beans>
