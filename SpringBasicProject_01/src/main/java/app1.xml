@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 스프링에 관리 요청을 할 클래스 등록 -->
+	<bean id="board" class="com.sist.main.Board"/>
+	<!-- 
+		<bean> : 클래스 등록 태그 (클래스를 빈이라고 한다) = 스프링은 등록이 된 클래스만 관리 
+		id : 구분자 (클래스를 찾을 경우 사용) = 중복이 되면 안 된다 
+		class : 등록할 클래스명 지정 
+		        Class.forName(패키지명.클래스명) => 메모리 할당
+		scope : 사용 범위
+		        default : singleton => 한 개의 메모리만 생성 
+		        prototype : 요청 시마다 메모리를 따로 할당 
+		Map에 저장
+		========================
+		   id      클래스 객체 주소 
+	    ========================
+	      board 
+	 -->
+</beans>
