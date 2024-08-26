@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 
+		1. 등록된 모든 클래스에 메모리 할당을 한다
+		2. setter에 값을 첨부
+		3. bean 태그에 등록하는 클래스는 순서가 존재하지 않는다
+		   => 가급적이면 순서로 코딩 (가독성)
+	 -->
+	<bean id="human" class="com.sist.main.Human"
+		p:name="홍길동"
+		p:sex="남자"
+		p:address="서울"
+	/>
+	<bean id="std" class="com.sist.main.Student"
+		p:hakbun="1"
+		p:subject="개발과"
+		p:kor="90"
+		p:eng="80"
+		p:math="90"
+		p:human-ref="human"
+	/>
+	<!-- ref : 클래스 객체 주입시 사용 => id명을 등록하면 객체 주소를 찾아서 대입 -->
+	<!-- 
+		class Human{
+		}
+		class Student{
+			private Human human=new Human();
+			public void setHumen(Humen h){
+				human=h;
+			}
+		}
+		
+		Human h=new Human();
+		Student s=new Student()
+		s.setHuman(h)
+		
+		멤버변수의 초기화
+		====== 기본형 / 클래스 / 배열 
+		
+		=> 스프링 등록
+		   일반 변수값 지정은 거의 없다
+		   => 객체 주소값 대입 
+	 -->
+</beans>
