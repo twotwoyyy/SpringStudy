@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd">
+	<!-- 데이터베이스와 관련 : 공통으로 사용되는 라이브러리 등록
+		application-context.xml
+		application-datasource.xml
+		application-security.xml
+		application-websocket.xml
+		application-etc.xml
+	 -->
+	 <!-- 오라클 정보를 모아서 전송 -->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:XE"
+		p:username="hr"
+		p:password="happy"
+		p:maxActive="10"
+		p:maxIdle="5"
+		p:maxWait="-1"
+	/>
+	<!-- 오라클 정보를 받아서
+		Connection 세팅 => 8,8,10000 <기본 default>
+	 -->
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+	/>
+	<!-- sql 문장 구현 => com.sist.mapper 안에 있는 모든 인터페이스 구현 하라는 뜻-->
+	<mybatis-spring:scan base-package="com.sist.mapper" factory-ref="ssf"/>
+</beans>
