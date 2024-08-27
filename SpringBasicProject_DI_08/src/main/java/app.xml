@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd">
+	<!-- DataBase 정보 읽기 
+		public class BasicDataSource{
+			private String driverClassName,url,username,password
+			=> setDriverClassName(String)
+			   setUrl(String)
+			   setUsername(String)
+			   setPassword(String)
+		}
+	 -->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:XE"
+		p:username="hr"
+		p:password="happy"
+	/>
+	<!-- DataBase 정보를 myBatis로 전송 
+		class SqlSessionFactoryBean{
+			private DataSource datasource;
+			public void setDataSource(DataSource datasource){
+				this.datasource=datasource
+			}
+		}
+	-->
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+	/>
+	<!-- myBatis를 이용해서 mapper 구현 요청 : 여기서는 Bean 이용 -->
+	<bean id="mapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="ssf"
+		p:mapperInterface="com.sist.dao.EmpMapper"
+	/>
+	<!-- 구현된 mapper를 DAO로 전송-->
+	<bean id="dao" class="com.sist.dao.EmpDAO"
+		p:mapper-ref="mapper"
+	/>
+</beans>
