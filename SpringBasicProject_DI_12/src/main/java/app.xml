@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<!-- AOP 적용 : 공통으로 사용되는 기능 -->
+	
+	<!-- 사용자 정의 클래스 등록 -->
+		<!-- 
+			@ComponentScan(basePackages={"com.sist.*"})
+		 -->
+	<context:component-scan base-package="com.sist.*"/>
+	<!-- 
+		@Component, @Repository(DAO), @Service(DAO 여러개), @Controller(Model), @RestController, @ControllerAdvice, 
+ 		@Configuration
+	 -->
+	<!-- 데이터베이스 정보 저장 -->
+		<!-- 
+			@Bean("ds")
+		 -->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:XE"
+		p:username="hr"
+		p:password="happy"
+		p:maxActive="10"
+		p:maxIdle="5"
+		p:maxWait="-1" 
+	/> <!-- p:maxWait :음수면 무한정 기다린다 -->
+	<!-- 트랜잭션 설정 -->
+	<!-- 마이바티스 연결 -->
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+	/>
+	<!-- Mapper 구현 -->
+	
+		<!-- 낱개로 구현하는 방법 -->
+		<!-- <bean id="mapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+			p:sqlSessionFactory-ref="ssf"
+			p:mapperInterface="com.sist.mapper.FoodMapper"
+		/> -->
+	
+		<!-- 모든 mapper(인터페이스)를 한번에 구현하는 방법
+			@MapperScan(basePackage={"com.sist.mapper"})
+		 -->
+	<mybatis-spring:scan base-package="com.sist.mapper" factory-ref="ssf"/> 
+	<!-- 보안 -->
+	<!-- 소켓 -->
+
+</beans>
