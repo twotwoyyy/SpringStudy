@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@localhost:1521:XE"
+		p:username="hr"
+		p:password="happy"
+	/>
+	<!-- getConnection / disConnection : Oracle 정보를 받는다 -->
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+		p:configLocation="classpath:Config.xml"
+	/>
+	<!-- 작성한 내용을 DAO로 전송 -->
+	<!--  
+	<bean id="dao" class="com.sist.dao.EmpDAO"
+		p:sqlSessionFactory-ref="ssf"
+	/>
+	-->
+	<bean id="mapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="ssf"
+		p:mapperInterface="com.sist.mapper.EmpMapper"
+	/>
+	<!-- 
+	<bean id="dao" class="com.sist.dao.EmpDAO2"
+		p:mapper-ref="mapper"
+	/> -->
+</beans>
