@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 오라클 정보 읽기 : BasicDataSource -->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		p:url="jdbc:oracle:thin:@211.238.142.124:1521:XE"
+		p:username="hr"
+		p:password="happy"
+	/>
+	<!-- MyBatis로 전송 : SqlSessionFactoryBean -->
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+	/>
+	<!-- SqlSessionFactory를 이용해서 Mapper 구현 요청 -->
+	<mybatis-spring:scan base-package="com.sist.mapper" factory-ref="ssf"/>
+</beans>
