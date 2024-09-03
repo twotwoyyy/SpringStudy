@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:aop="http://www.springframework.org/schema/aop"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    <!-- 
+        Spring 4 : XML로 클래스 등록 = 현재 실무 (유지보수)
+        Spring 5 : XML, 자바로 등록 = 개발중 
+     -->
+     <aop:aspectj-autoproxy/><!-- aop를 어노테이션으로 제작 -->
+     <context:component-scan base-package="com.sist.*"/>
+     <!-- 선택적인 메모리 할당 : 어노테이션을 이용해서 등록 
+         @Component, : 일반 클래스 등록
+         @Repository, : DAO (저장소) => 데이터베이스 연동하는 클래스
+         @Service, : BI(DAO 여러 개를 통합)
+         @Controller, : 주로 처리하는 역할 => 화면 변경 (jsp 파일명, .do)
+         @RestController, : javascript 전송, JSON 전송, 일반 문자열 전송 
+         	=> Ajax, VueJS, ReactJS, Kotlin, Flutter(Dart)
+         @ControllerAdvice, : 모든 Controller의 예외처리 동시에 처리  
+         @Configuration : XML 대신 자바로 환경 설정이 가능 
+     -->
+     <!-- 
+         Spring MVC
+         DisparcherServlet : 요청을 받는 서블릿
+           = HadleMapping : 요청처리에 해당되는 메소드를 호출
+              => @Controller
+              => @RequestMapping, @GetMapping, @PostMapping
+           = ViewResover : 요청 처리 결과값을 JSP를 찾아서 전송
+              => 경로명, 확장자
+      -->
+      <bean id="viewResolver"
+         class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+         p:prefix="/"
+         p:suffix=".jsp"
+      />
+</beans>
