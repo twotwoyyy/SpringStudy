@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	<bean id="aop" class="com.sist.aop.DAOAop"/>
+	<bean id="dao" class="com.sist.dao.MyDAO"/>
+	<aop:config>
+		<aop:aspect ref="aop">
+			<aop:before method="before" pointcut="execution(* com.sist.dao.MyDAO.*(..))"/>
+			<!-- 적용할 메소드 설정
+				execution(* com.sist.dao.MyDAO.*(..))
+				         === 리턴형, (*을 주면 어떤 것이 와도 상관없음)
+										         (..) => 매개변수가 없거나 한 개 이상이 있는 경우 
+										         () 
+										         == 매개변수가 없는 경우 
+										         (String)
+										         ======== 매개 변수가 String
+										         (int,int)
+										         ========= 매개변수 int가 두개 
+				= 지정된 메소드 호출 시에 before를 먼저 호출한다 
+			 -->
+			<aop:after method="after" pointcut="execution(* com.sist.dao.MyDAO.*(..))"/>
+			<aop:around method="around" pointcut="execution(* com.sist.dao.MyDAO.*(..))"/>
+			<aop:after-returning method="afterReturning" pointcut="execution(* com.sist.dao.MyDAO.*(*))" returning="obj"/>
+			<!-- 
+				execute(* com.sist.dao.MyDAO.*(*))
+				                              ==== 매개변수 1개
+				                              (*,*)
+			 -->
+			<aop:after-throwing method="afterThowable" pointcut="execution(* com.sist.dao.MyDAO.*(..))" throwing="ex"/>
+		</aop:aspect>
+	</aop:config>
+
+</beans>
