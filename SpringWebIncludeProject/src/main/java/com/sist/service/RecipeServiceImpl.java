@@ -52,4 +52,28 @@ public class RecipeServiceImpl implements RecipeService{
 	public RecipeVO recipeCookieInfoData(int no) {
 		return dao.recipeCookieInfoData(no);
 	}
+
+	@Override
+	public List<RecipeVO> recipeFindData(Map map) {
+		// TODO Auto-generated method stub
+		return dao.recipeFindData(map);
+	}
+
+	@Override
+	public int recipeFindTotalPage(Map map) {
+		// TODO Auto-generated method stub
+		return dao.recipeFindTotalPage(map);
+	}
+
+	@Override
+	public List<FoodVO> foodTop5Data() {
+		// TODO Auto-generated method stub
+		return dao.foodTop5Data();
+	}
+
+	@Override
+	public List<RecipeVO> recipeTop5Data() {
+		// TODO Auto-generated method stub
+		return dao.recipeTop5Data();
+	}
 }
