@@ -102,17 +102,23 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		<!-- Jsoup -->
-		<dependency>
+	    <!-- Jsoup -->
+	    <dependency>
 		    <groupId>org.jsoup</groupId>
 		    <artifactId>jsoup</artifactId>
-		    <version>1.18.1</version>
-		</dependency>
+		    <version>1.12.1</version>
+		</dependency>	
 		<!-- JSON -->
 		<dependency>
 		    <groupId>com.googlecode.json-simple</groupId>
 		    <artifactId>json-simple</artifactId>
 		    <version>1.1.1</version>
+		</dependency>
+		<!-- JAXB -->
+		<dependency>
+		    <groupId>javax.xml.bind</groupId>
+		    <artifactId>jaxb-api</artifactId>
+		    <version>2.3.1</version>
 		</dependency>
 		<!-- AspectJ -->
 		<dependency>
@@ -131,7 +137,13 @@
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-websocket</artifactId>
 		    <version>5.1.5.RELEASE</version>
-		</dependency>    
+		</dependency>
+      
+      <!-- <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-expression</artifactId>
+         <version>5.1.5.RELEASE</version>
+      </dependency> -->
       <dependency>
          <groupId>org.springframework</groupId>
          <artifactId>spring-jdbc</artifactId>
@@ -147,6 +159,11 @@
          <artifactId>spring-aspects</artifactId>
          <version>5.1.5.RELEASE</version>
       </dependency>
+      <!-- <dependency>
+         <groupId>com.oracle</groupId>
+         <artifactId>ojdbc14</artifactId>
+         <version>10.2.0.4.0</version>
+      </dependency> -->
       <dependency>
          <groupId>org.springframework</groupId>
          <artifactId>spring-jms</artifactId>
@@ -167,16 +184,31 @@
          <artifactId>spring-test</artifactId>
          <version>5.1.5.RELEASE</version>
       </dependency>
+      <!-- <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-webmvc-portlet</artifactId>
+         <version>5.1.5.RELEASE</version>
+      </dependency> -->
       
       <dependency>
          <groupId>taglibs</groupId>
          <artifactId>standard</artifactId>
          <version>1.1.2</version>
       </dependency>
+
+      <dependency>
+         <groupId>org.nuiton.thirdparty</groupId>
+         <artifactId>Rserve</artifactId>
+         <version>1.7-3</version>
+      </dependency>
+      <dependency>
+         <groupId>org.nuiton.thirdparty</groupId>
+         <artifactId>REngine</artifactId>
+         <version>1.7-3</version>
+      </dependency>
       <!-- 
          @Select("<script>SELECT~~ <if test="">")
        -->
-       <!-- MyBatis -->
       <dependency>
          <groupId>org.mybatis</groupId>
          <artifactId>mybatis</artifactId>
@@ -186,6 +218,21 @@
          <groupId>org.mybatis</groupId>
          <artifactId>mybatis-spring</artifactId>
          <version>1.2.0</version>
+      </dependency>
+      <dependency>
+         <groupId>org.mongodb</groupId>
+         <artifactId>mongo-java-driver</artifactId>
+         <version>2.13.0-rc1</version>
+      </dependency>
+      <dependency>
+         <groupId>org.nuiton.thirdparty</groupId>
+         <artifactId>JRI</artifactId>
+         <version>0.9-6</version>
+      </dependency>
+      <dependency>
+         <groupId>com.github.lucarosellini.rJava</groupId>
+         <artifactId>JRIEngine</artifactId>
+         <version>0.9-7</version>
       </dependency>
       <dependency>
          <groupId>aopalliance</groupId>
@@ -247,14 +294,39 @@
          <artifactId>javassist</artifactId>
          <version>3.18.2-GA</version>
       </dependency>
-	  <!-- 유효성 검사 라이브러리 -->
+	  
+      <dependency>
+         <groupId>org.nuiton.thirdparty</groupId>
+         <artifactId>Rserve</artifactId>
+         <version>1.7-3</version>
+      </dependency>
+      <dependency>
+         <groupId>org.nuiton.thirdparty</groupId>
+         <artifactId>REngine</artifactId>
+         <version>1.7-3</version>
+      </dependency>
+      <dependency>
+			<groupId>org.twitter4j</groupId>
+			<artifactId>twitter4j-core</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+        <dependency>
+			<groupId>org.twitter4j</groupId>
+			<artifactId>twitter4j-stream</artifactId>
+			<version>4.0.2</version>
+		</dependency>
         <dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
-		</dependency>       
-		<!-- End -->
-			
+		</dependency>
+       <!--  <dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>10.2.0.4.0</version>
+		</dependency> -->
+        
+		<!-- End -->	
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -279,13 +351,7 @@
 		<artifactId>asm</artifactId>
 		<version>3.1</version>
 	</dependency>
-		<!-- tiles : 6버전에서는 삭제 
-			Spring5 = javax
-			Spring6 = jakarata => tomcat 10 => jdk17 이상
-			jdk21 => 출력시에 한글이 깨진다
-			
-			<jsp:include>대체 => tiles
-		-->
+		<!-- tiles  -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-core</artifactId>

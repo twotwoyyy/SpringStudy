@@ -13,25 +13,42 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public List<ReplyBoardVO> boardListData(int start, int end) {
-		// TODO Auto-generated method stub
 		return dao.boardListData(start, end);
 	}
 
 	@Override
 	public int boardRowCount() {
-		// TODO Auto-generated method stub
 		return dao.boardRowCount();
 	}
 
 	@Override
 	public void boardInsert(ReplyBoardVO vo) {
-		// TODO Auto-generated method stub
 		dao.boardInsert(vo);
 	}
 
 	@Override
 	public ReplyBoardVO boardDetailData(int no) {
-		// TODO Auto-generated method stub
 		return dao.boardDetailData(no);
+	}
+
+	@Override
+	public ReplyBoardVO boardUpdateData(int no) {
+		return dao.boardDetailData(no);
+	}
+
+	@Override
+	public String boardUpdate(ReplyBoardVO vo) {
+		return dao.boardUpdate(vo);
+	}
+
+	@Override
+	public void boardReplyInsert(int pno, ReplyBoardVO vo) {
+		dao.boardReplyInsert(pno, vo);
+		
+	}
+
+	@Override
+	public String boardDelete(int no, String pwd) {
+		return dao.boardDelete(no, pwd);
 	}
 }

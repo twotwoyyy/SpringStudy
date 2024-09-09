@@ -21,8 +21,23 @@
 		p:maxIdle="#{db['maxIdle']}"
 		p:maxWait="#{db['maxWait']}"
 	/>
-	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+	<bean id="dataSource"
+		class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="ds" />
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE" />
+				<property name="sqlPrefix" value="SQL : " />
+			</bean>
+		</property>
+	</bean>
+	<!-- 트랜잭션 설정 -->
+	<tx:annotation-driven/>
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
 		p:dataSource-ref="ds"
+	/>
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
 	/>
 	<mybatis-spring:scan base-package="com.sist.mapper" factory-ref="ssf"/>
 

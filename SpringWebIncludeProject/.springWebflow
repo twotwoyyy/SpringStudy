@@ -3,9 +3,5 @@
 	<version>1</version>
 	<pluginVersion><![CDATA[3.9.18.202109140629-RELEASE]]></pluginVersion>
 	<configs>
-		<config>
-			<file>src/main/webapp/WEB-INF/config/application-datasource.xml</file>
-			<name><![CDATA[application-datasource]]></name>
-		</config>
 	</configs>
 </webflow-project-description>
