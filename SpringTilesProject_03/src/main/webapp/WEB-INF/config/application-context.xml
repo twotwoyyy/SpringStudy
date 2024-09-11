@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	<!-- 모든 Controller가 수행 시 공통으로 수행하는 기능을 모아서 관리 : footer,인기 순위,광고 -->
+	<aop:aspectj-autoproxy/> 
+	<!-- 사용자 정의 클래스를 선택적으로 메모리 할당 관리 
+		@Component : 일반 클래스 => ~Manager(Open API)
+		@Repository : 데이터베이스 연동 => ~DAO 
+		@Service : BI, DAO 여러 개 모아서 관리 => ~Service
+		@Controller : Model 클래스 => 요청 처리 후에 결과값을 JSP로 전송 => ~Controller
+		@RestController : Model 클래스 => JavaScript와 연동 : JSON => ~RestController
+		@ControllerAdvice : Controller 클래스의 공통 기반 예외 처리
+		@Configuration : XML 대신 자바로 클래스 설정
+	-->
+	<!-- Tiles 설정 파일 읽기 : tiles.xml -->
+		<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
+		p:definitions="/WEB-INF/tiles.xml" />
+	<!-- TilesView 설정 -->
+		<bean id="tilesResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+		p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView"
+		p:order="0" />
+	<!-- ViewResolver -->
+		<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/" p:suffix=".jsp" p:order="1" />
+	<!-- MultipartResolver -->
+	<context:component-scan base-package="com.sist.*"/>
+</beans>
