@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="main" template="/WEB-INF/main/main.jsp">
+		<put-attribute name="header" value="/WEB-INF/main/header.jsp"/>
+		<put-attribute name="home" value="/WEB-INF/main/home.jsp"/>
+	</definition>
+	<!-- 
+		return "board/list"
+		        recipe/list
+		        recipe/detail
+		        recipe/find
+		        recipe/chef_list
+		        
+		        recipe/chef/list => */*/*
+	 -->
+	<!-- 이중 include -->
+	<definition name="mypage" template="/WEB-INF/mypage/mypage_main.jsp">
+		<put-attribute name="header" value="/WEB-INF/main/header.jsp"/>
+		<put-attribute name="menu" value="/WEB-INF/mypage/mypage_menu.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/mypage/mypage_content.jsp"/>
+	</definition>
+	<definition name="mypage/*" extends="mypage">
+		<put-attribute name="content" value="/WEB-INF/mypage/{1}.jsp"/>
+	</definition>
+	<!-- 관리자 include -->
+	<definition name="admin" template="/WEB-INF/admin/admin_main.jsp">
+		<put-attribute name="header" value="/WEB-INF/main/header.jsp"/>
+		<put-attribute name="adminMenu" value="/WEB-INF/admin/admin_menu.jsp"/>
+		<put-attribute name="adminContent" value="/WEB-INF/admin/admin_content.jsp"/>
+	</definition>
+	<definition name="admin/*" extends="admin">
+		<put-attribute name="adminContent" value="/WEB-INF/admin/{1}.jsp"/>
+	</definition>
+	<!-- emp/list -->
+	<definition name="*/*" extends="main">
+		<put-attribute name="home" value="/WEB-INF/{1}/{2}.jsp"/>
+	</definition>
+	<definition name="*/*/*" extends="main">
+		<put-attribute name="home" value="/WEB-INF/{1}/{2}/{3}.jsp"/>
+	</definition>
+	<!-- 2중 inclue : Mypage,Adminpage -->
+</tiles-definitions>

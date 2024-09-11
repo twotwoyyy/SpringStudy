@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	<!-- 데이터베이스 관련
+		1. 데이터베이스 정보 : BasicDataSource
+		2. 트랜잭션 설정 : TransactionManager
+		3. MyBatis / JPA : ORM 
+		   = SqlSessionFactoryBean
+		4. MyBatis = interface 구현 : MapperFactoryBean
+		
+		application-websocket : 실시간 채팅, 쪽지 보내기
+		application-security: 보안 설정, 권한 부여, 자동 로그인
+		application-task : 스케줄러 = 새벽 5시 = 데이터베이스 백업  
+	 -->
+	<util:properties id="db" location="/WEB-INF/config/db.properties"/>
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="#{db['driver']}"
+		p:url="#{db['url']}"
+		p:username="#{db[username]}"
+		p:password="#{db[password]}"
+	/>
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="ds"
+		p:configLocation="/WEB-INF/config/Config.xml"
+	/>
+	<mybatis-spring:scan base-package="com.sist.mapper" factory-ref="ssf"/>
+</beans>

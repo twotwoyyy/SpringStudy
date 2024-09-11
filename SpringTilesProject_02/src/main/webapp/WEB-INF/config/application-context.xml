@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+<context:component-scan base-package="com.sist.*" />
+	<!-- application-context.xml 
+		1. AOP 등록
+		2. 사용자 정의 클래스 등록
+			= <bean>
+			= <context:component-scan>
+		3. Resolver : JSP를 찾기 
+		4. upload : multipartResolver
+		
+		= XML은 세팅이 종료되면 수정하지 않는다 
+	 -->
+	<!-- tiles의 환경 설정 읽기 : TilesConfigurer -->
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
+		p:definitions="/WEB-INF/tiles.xml" />
+	<!-- UrlBasedViewResolver : return값을 받아온다 return "main/main"; -->
+	<bean id="tilesResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+		p:viewClass="org.springframework.web.servlet.view.tiles3.TilesView"
+		p:order="0" />
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/" p:suffix=".jsp" p:order="1" />
+</beans>

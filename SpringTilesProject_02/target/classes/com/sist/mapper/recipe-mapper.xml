@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.RecipeMapper">
+	<select id="recipeListData" resultType="RecipeVO"
+		parameterType="hashmap">
+		SELECT no,title,poster,chef,num
+		FROM (SELECT no,title,poster,chef,rownum as num
+		FROM (SELECT no,title,poster,chef
+		FROM recipe
+		WHERE no IN(SELECT no FROM recipe INTERSECT (SELECT no FROM recipeDetail))
+		ORDER BY no ASC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="recipeFindData" resultType="RecipeVO"
+		parameterType="hashmap">
+		SELECT no,title,poster,chef,num
+		FROM (SELECT no,title,poster,chef,rownum as num
+		FROM (SELECT no,title,poster,chef
+		FROM recipe
+		WHERE no IN(SELECT no FROM recipe INTERSECT (SELECT no FROM recipeDetail))
+		AND title LIKE '%'||#{fd}||'%'
+		ORDER BY no ASC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+
+	<select id="chefListData" resultType="ChefVO"
+		parameterType="hashmap">
+		SELECT poster,chef,mem_cont1,mem_cont2,mem_cont3,mem_cont7,num
+		FROM (SELECT poster,chef,mem_cont1,mem_cont2,mem_cont3,mem_cont7,rownum as num
+		FROM (SELECT poster,chef,mem_cont1,mem_cont2,mem_cont3,mem_cont7
+		FROM chef))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="chefMakeData" resultType="RecipeVO" parameterType="hashmap">
+		SELECT no,title,poster,chef,num
+		FROM (SELECT no,title,poster,chef,rownum as num
+		FROM (SELECT no,title,poster,chef
+		FROM recipe
+		WHERE no IN(SELECT no FROM recipe INTERSECT (SELECT no FROM recipeDetail))
+		AND chef=#{chef}
+		ORDER BY no ASC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="chefMakeTotalPage" resultType="int" parameterType="hashmap">
+		SELECT CEIL(COUNT(*)/20.0)
+		FROM recipe
+		WHERE no IN(SELECT no FROM recipe INTERSECT (SELECT no FROM recipeDetail))
+		AND chef=#{chef}
+	</select>
+	
+</mapper>
