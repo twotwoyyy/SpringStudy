@@ -7,18 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <!-- Preloader Start -->
-    <div id="preloader">
-        <div class="yummy-load"></div>
-    </div>
-
-    <!-- Background Pattern Swither -->
-    <div id="pattern-switcher">
-        Bg Pattern
-    </div>
-    <div id="patter-close">
-        <i class="fa fa-times" aria-hidden="true"></i>
-    </div>
+<!-- ****** Top Header Area Start ****** -->
     <div class="top_header_area">
         <div class="container">
             <div class="row">
@@ -60,6 +49,9 @@
             </div>
         </div>
     </div>
+    <!-- ****** Top Header Area End ****** -->
+
+    <!-- ****** Header Area Start ****** -->
     <header class="header_area">
         <div class="container">
             <div class="row">
@@ -85,12 +77,17 @@
                                     <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">회원</a>
                                     <div class="dropdown-menu" aria-labelledby="yummyDropdown">
                                         <a class="dropdown-item" href="index.html">회원가입</a>
-                                        <a class="dropdown-item" href="archive.html">아이디 찾기</a>
-                                        <a class="dropdown-item" href="single.html">비밀번호 찾기</a>
+                                        <a class="dropdown-item" href="archive.html">아이디찾기</a>
+                                        <a class="dropdown-item" href="single.html">비밀번호찾기</a>
                                     </div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Features</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">레시피</a>
+                                    <div class="dropdown-menu" aria-labelledby="yummyDropdown">
+                                        <a class="dropdown-item" href="../recipe/list.do">레시피</a>
+                                        <a class="dropdown-item" href="../recipe/chef_list.do">쉐프</a>
+                                        <a class="dropdown-item" href="../recipe/make.do">레시피 만들기</a>
+                                    </div>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Categories</a>
@@ -111,5 +108,6 @@
             </div>
         </div>
     </header>
+    <!-- ****** Header Area End ****** -->
 </body>
 </html>

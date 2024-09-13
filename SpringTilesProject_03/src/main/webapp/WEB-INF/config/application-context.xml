@@ -20,6 +20,13 @@
 		@ControllerAdvice : Controller 클래스의 공통 기반 예외 처리
 		@Configuration : XML 대신 자바로 클래스 설정
 	-->
+	<mvc:annotation-driven/>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/main/main.do"/>
+			<bean id="mainIntercept" class="com.sist.intercept.MainInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	<!-- Tiles 설정 파일 읽기 : tiles.xml -->
 		<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"

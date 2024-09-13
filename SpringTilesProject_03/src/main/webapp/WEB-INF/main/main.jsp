@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +11,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>2차 미니 프로젝트</title>
+    <title>2차 미니프로젝트</title>
 
     <!-- Favicon -->
     <link rel="icon" href="../img/core-img/favicon.ico">
@@ -37,10 +37,9 @@
     <div id="patter-close">
         <i class="fa fa-times" aria-hidden="true"></i>
     </div>
-	<tiles:insertAttribute name="header"/>
-	<tiles:insertAttribute name="home"/>
-	<tiles:insertAttribute name="footer"/>
-
+    <tiles:insertAttribute name="header"/>
+    <tiles:insertAttribute name="home"/>
+    <tiles:insertAttribute name="footer"/>
     <!-- Jquery-2.2.4 js -->
     <script src="../js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
