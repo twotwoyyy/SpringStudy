@@ -62,7 +62,7 @@
 					return arr
 				}
 			}
-		}).mount('.container')
+		}).mount('.container') 
 	</script>
 </body>
 </html>
