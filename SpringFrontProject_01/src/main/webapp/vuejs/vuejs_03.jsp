@@ -129,7 +129,7 @@
 			     click="함수명"
 			     change="함수명"
 			     keydown / keyup
-			     mousedown / mouseup
+			     mousedown / mouseup 
 			===========================
 			v-model : 양방향 => 입력 값을 받아서 출력 
 			
