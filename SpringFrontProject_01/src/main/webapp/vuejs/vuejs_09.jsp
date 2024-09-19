@@ -60,7 +60,7 @@
 				// this.$refs.ref명칭.이벤트(focus..value...) => input tag 제어
 				// => e.target.value => React
 				// => $('#fd').val() => jquery
-				// submit 버튼은 사용하지 않고 자체에서 CRUD 처리 
+				// submit 버튼은 사용하지 않고 자체에서 CRUD 처리   
 				find(){
 					let fds=this.$refs.fd.value
 					if(fds===""){
