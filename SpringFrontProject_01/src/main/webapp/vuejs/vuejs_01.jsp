@@ -139,7 +139,7 @@ $(function(){
 			목록 => List 
 			board_list:[]
 			논리형 
-			bCheck:false
+			bCheck:false  
 		*/
 		data(){
 			return{
