@@ -92,7 +92,7 @@ p {
 				// jquery 연동 
 			},
 			methods:{
-				// 사용자 정의 함수 => 이벤트 발생 시 주로 처리 
+				// 사용자 정의 함수 => 이벤트 발생 시 주로 처리  
 				detail_data(vo){
 					this.isShow=true
 					this.movie_detail=vo
