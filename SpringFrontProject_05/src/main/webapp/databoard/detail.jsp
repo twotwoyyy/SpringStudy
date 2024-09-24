@@ -59,7 +59,7 @@
 				</tr>
 				<tr>
 					<td colspan="4" class="text-right">
-						<a href="#" class="btn btn-xs btn-warning">수정</a>
+						<a :href="'update.do?no='+vo.no" class="btn btn-xs btn-warning">수정</a>
 						<!--   <span class="btn btn-xs btn-info" id="delBtn">삭제</span> -->
 						<input type="button" class="btn btn-xs btn-info" value="삭제" @click="del()" ref="delBtn">
 						<a href="list.do" class="btn btn-xs btn-success">목록</a>
@@ -111,7 +111,7 @@
 						this.$refs.delBtn.value="취소"
 					}else{
 						this.isShow=false
-						this.$refs.delBtn.value="수정"
+						this.$refs.delBtn.value="삭제"
 					}
 				},
 				boardDelete(){
@@ -120,6 +120,26 @@
 						this.$refs.pwd.focus()
 						return 
 					}
+					// 삭제 요청
+					axios.get('delete_vue.do',{
+						params:{
+							no:this.no,
+							pwd:this.pwd
+						}
+					// 결과값을 읽는다 => 요청 : 응답값 받기
+					}).then(response=>{
+						if(response.data==='yes'){
+							alert("게시글이 삭제되었습니다")
+							location.href="list.do"
+						}else{
+							alert("비밀번호가 틀립니다!!")
+							//this.$refs.pwd.value=""
+							this.pwd=""
+							this.$refs.pwd.focus()
+						}
+					}).catch(error=>{
+						console.log(error.response)
+					})
 				}
 			}
 		}).mount('.container')

@@ -1,6 +1,7 @@
 package com.sist.mapper;
 import java.util.*;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -11,6 +12,8 @@ import com.sist.vo.*;
 /*
  *   FormData
  */
+
+import lombok.Delegate;
 public interface DataBoardMapper {
 	@Select("SELECT no,subject,name,TO_CHAR(regdate,'YYYY-MM-DD') as dbday,hit,num "
 			+"FROM (SELECT no,subject,name,regdate,hit,rownum as num "
@@ -38,5 +41,20 @@ public interface DataBoardMapper {
 			+"FROM vue_databoard WHERE no=#{no}")
 	public DataBoardVO databoardDetailData(int no);
 	
+	// 삭제하기
+	// 1. 비밀번호 처리
+	@Select("SELECT pwd FROM vue_databoard WHERE no=#{no}")
+	public String databoardGetPassword(int no);
+	// 2. 파일 정보 읽기
+	@Select("SELECT filename,filecount FROM vue_databoard WHERE no=#{no}")
+	public DataBoardVO databoardFileInfoData(int no);
+	// 3. 삭제하기
+	@Delete("DELETE FROM vue_databoard WHERE no=#{no}")
+	public void databoardDelete(int no);
 	
+	// 수정하기
+	@Update("UPDATE vue_databoard SET "
+			+"name=#{name},subject=#{subject},content=#{content},filename=#{filename},filesize=#{filesize},filecount=#{filecount} "
+			+"WHERE no=#{no}")
+	public void databoardUpdate(DataBoardVO vo);
 }
