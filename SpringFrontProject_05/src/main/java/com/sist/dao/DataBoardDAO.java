@@ -13,7 +13,14 @@ public class DataBoardDAO {
 	public List<DataBoardVO> databoardListData(int start,int end){
 		return mapper.databoardListData(start, end);
 	}
-	public int databoardTotalPage() {
-		return mapper.databoardTotalPage();
+	public int databoardCount() {
+		return mapper.databoardCount();
+	}
+	public void databoardInsert(DataBoardVO vo) {
+		mapper.databoardInsert(vo);
+	}
+	public DataBoardVO databoardDetailData(int no) {
+		mapper.hitIncrement(no);
+		return mapper.databoardDetailData(no);
 	}
 }
