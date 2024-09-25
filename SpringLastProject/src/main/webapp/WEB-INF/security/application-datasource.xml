@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+    <!-- properties읽기 -->
+    <util:properties id="db" location="/WEB-INF/security/db.properties"/>
+    <!-- DataSource  -->
+    <bean id="ds"
+       class="org.apache.commons.dbcp.BasicDataSource"
+       p:driverClassName="#{db['driver']}"
+       p:url="#{db['url']}"
+       p:username="#{db['username']}"
+       p:password="#{db['password']}"
+       p:maxActive="#{db['maxActive']}"
+       p:maxIdle="#{db['maxIdle']}"
+       p:maxWait="#{db['maxWait']}"
+    />
+    <!-- Transaction 적용 -->
+    <!-- SqlSessionFactoryBean -->
+    <bean id="ssf" 
+       class="org.mybatis.spring.SqlSessionFactoryBean"
+       p:dataSource-ref="ds"
+    />
+    <!-- MyBatis로그  -->
+    <!-- Mapper구현 -->
+    <mybatis-spring:scan base-package="com.sist.mapper"/>
+    <!-- 
+          동적쿼리 
+          조인 / 서브쿼리 
+          PL/SQL = AllReply : 맛집 / 레시피 / 상품 / 서울 여행 
+     -->
+</beans>
