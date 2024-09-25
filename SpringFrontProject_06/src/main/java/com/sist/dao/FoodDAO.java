@@ -20,7 +20,14 @@ public class FoodDAO {
 		return mapper.foodTypeListData(map);
 	}
 	
-	public int foodTypeTotalpage() {
-		return mapper.foodTypeTotalpage();
+	public int foodTypeTotalpage(String type) {
+		return mapper.foodTypeTotalPage(type);
+	}
+	public FoodVO foodDetailData(int fno) {
+		mapper.hitIncrement(fno);
+		return mapper.foodDetailData(fno);
+	}
+	public List<FoodVO> foodNearHouseData(String address){
+		return mapper.foodNearHouseData(address);
 	}
 }
