@@ -1,17 +1,24 @@
 package com.sist.web;
 
 import javax.servlet.http.Cookie;
+import java.util.*;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.sist.service.FoodService;
+import com.sist.vo.FoodVO;
+import com.sist.service.*;
 @Controller
 @RequestMapping("food/")
 public class FoodController {
+	@Autowired // 데이터베이스 연동
+	private FoodService fService;
 	@GetMapping("list.do")
 	public String food_list() {
 		return "food/list";
@@ -36,9 +43,16 @@ public class FoodController {
 	// 그래서 detail_before, detail 따로 작업하는 것임
 	@GetMapping("detail.do")
 	public String food_detail(int fno, Model model) {
+		FoodVO vo=fService.foodDetailData(fno);
 		
-		model.addAttribute("fno",fno);
+		model.addAttribute("vo",vo);
+//		model.addAttribute("fno",fno); vo 안에 들어있기 때문에 생략 
 		return "food/detail";
+	}
+	
+	@GetMapping("find.do")
+	public String food_find() {
+		return "food/find";
 	}
 
 }

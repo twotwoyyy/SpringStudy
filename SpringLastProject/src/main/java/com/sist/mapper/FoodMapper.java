@@ -27,10 +27,24 @@ public interface FoodMapper {
 	@Update("UPDATE project_food_house SET hit=hit+1 WHERE fno=#{fno}")
 	public void foodHitIncrement(int fno);
 	
-	@Select("SELECT * FROM project_food_house WEHRE fno=#{fno}")
+	@Select("SELECT * FROM project_food_house WHERE fno=#{fno}")
 	public FoodVO foodDetailData(int fno);
 	// 예약
 	
 	// 추천 => 네이버 카페
+	// 검색
+	@Select("SELECT fno,name,poster,phone,type,hit,score,address,num "
+			+"FROM (SELECT fno,name,poster,phone,type,hit,score,address,rownum as num "
+			+"FROM (SELECT fno,name,poster,phone,type,hit,score,address "
+			+"FROM project_food_house "
+			//+"<if test='fd!=null'>
+			+"WHERE address LIKE '%'||#{fd}||'%' "
+			//+"</if>
+			+"ORDER BY fno ASC)) "
+			+"WHERE num BETWEEN #{start} AND #{end}")
+	public List<FoodVO> foodFindListData(Map map);
+	// 총페이지
+	@Select("SELECT CEIL(COUNT(*)/12.0) FROM project_food_house WHERE address LIKE '%'||#{fd}||'%'")
+	public int foodFindTotalPage(Map map);
 }
 

@@ -41,4 +41,39 @@ public class FoodRestController {
 		String json=mapper.writeValueAsString(map);
 		return json;
 	}
+	
+	// 검색
+	@GetMapping(value="food/find_vue.do", produces = "text/plain;charset=UTF-8")
+	public String food_find(int page, String fd) throws Exception{
+		// Service 연동
+		int rowSize=12;
+		int start=(rowSize*page)-(rowSize-1);
+		int end=rowSize*page;
+		Map map=new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("fd", fd);
+		
+		List<FoodVO> list=fService.foodFindListData(map);
+		int totalpage=fService.foodFindTotalPage(map);
+		
+		final int BLOCK=10;
+		int startPage=((page-1)/BLOCK*BLOCK)+1;
+		int endPage=((page-1)/BLOCK*BLOCK)+BLOCK;
+		
+		if(endPage>totalpage)
+			endPage=totalpage;
+		
+		map=new HashMap();
+		map.put("list", list);
+		map.put("curpage", page);
+		map.put("totalpage", totalpage);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		
+		// JSON으로 변환 후 전송
+		ObjectMapper mapper=new ObjectMapper();
+		String json=mapper.writeValueAsString(map);
+		return json;
+	}
 }

@@ -84,7 +84,7 @@
                                     <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">맛집</a>
                                     <div class="dropdown-menu" aria-labelledby="yummyDropdown">
                                         <a class="dropdown-item" href="../food/list.do">맛집 목록</a>
-                                        <a class="dropdown-item" href="#">맛집 검색</a>
+                                        <a class="dropdown-item" href="../food/find.do">맛집 검색</a>
                                         <a class="dropdown-item" href="#">맛집 예약</a>
                                         <a class="dropdown-item" href="#">맛집 추천</a>
                                     </div>
@@ -92,17 +92,17 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">레시피</a>
                                     <div class="dropdown-menu" aria-labelledby="yummyDropdown">
-                                        <a class="dropdown-item" href="#">레시피 목록</a>
-                                        <a class="dropdown-item" href="#">쉐프 목록</a>
+                                        <a class="dropdown-item" href="../recipe/list.do">레시피 목록</a>
+                                        <a class="dropdown-item" href="../recipe/chef_list.do">쉐프 목록</a>
                                         <a class="dropdown-item" href="#">레시피 만들기</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">여행</a>
                                     <div class="dropdown-menu" aria-labelledby="yummyDropdown">
-                                        <a class="dropdown-item" href="#">명소</a>
-                                        <a class="dropdown-item" href="#">자연&관광</a>
-                                        <a class="dropdown-item" href="#">쇼핑</a>
+                                        <a class="dropdown-item" href="../seoul/location.do">명소</a>
+                                        <a class="dropdown-item" href="../seoul/nature.do">자연&관광</a>
+                                        <a class="dropdown-item" href="../seoul/shop.do">쇼핑</a>
                                         <a class="dropdown-item" href="#">여행코스</a>
                                         <a class="dropdown-item" href="#">실시간 날씨</a>
                                     </div>

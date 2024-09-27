@@ -15,15 +15,17 @@ h4{
 	text-overflow: ellipsis;
 }
 </style>
+
 </head>
 <body>
+<div id="findApp">
     <!-- ****** Breadcumb Area Start ****** -->
     <div class="breadcumb-area" style="background-image: url(../img/bg-img/breadcumb.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="bradcumb-title text-center">
-                        <h2>맛집 목록 페이지</h2>
+                        <h2>맛집 검색</h2>
                     </div>
                 </div>
             </div>
@@ -35,8 +37,9 @@ h4{
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"></li>
-                            <li class="breadcrumb-item active" aria-current="page"></li>
+                            <li class="breadcrumb-item">
+                            	<input type="text" size="25" ref="fd" v-model="fd" @keydown.enter="foodFind()">
+                            </li>
                         </ol>
                     </nav>
                 </div>
@@ -46,7 +49,7 @@ h4{
     <!-- ****** Breadcumb Area End ****** -->
 
     <!-- ****** Archive Area Start ****** -->
-    <section class="archive-area section_padding_80" id="listApp">
+    <section class="archive-area section_padding_80">
         <div class="container">
             <div class="row">
                 <!-- Single Post -->
@@ -55,7 +58,7 @@ h4{
                         <!-- Post Thumb -->
                         <div class="post-thumb">
                         	<a :href="'../food/detail_before.do?fno='+vo.fno">
-                            	<img :src="'http://www.menupan.com'+vo.poster" style="width: 350px;height: 250px">
+                            	<img :src="'http://www.menupan.com'+vo.poster" :title="vo.address" style="width: 350px;height: 250px">
                         	</a>
                         </div>
                         <!-- Post Content -->
@@ -117,61 +120,78 @@ h4{
             </div>
         </div>
     </section>
+    </div>
     <!-- ****** Archive Area End ****** -->
     <script>
-    let listApp=Vue.createApp({
-    	data(){
-    		return {
-    			food_list:[],
-    			curpage:1,
-    			totalpage:0,
-    			startPage:0,
-    			endPage:0
-    		}
-    	},
-    	mounted(){
-    		this.dataRecv()
-    	},
-    	methods:{
-    		range(start,end){
-    			let arr=[]
-    			let len=end-start
-    			for(let i=0;i<=len;i++){
-    				arr[i]=start
-    				start++
+    	let findApp=Vue.createApp({
+    		data(){
+    			return {
+    				food_list:[],
+    				curpage:1,
+    				totalpage:0,
+    				startPage:0,
+    				endPage:0,
+    				fd:'마포'
     			}
-    			return arr
     		},
-    		pageChange(page){
-    			this.curpage=page
-    			this.dataRecv()
+    		// window.onload => 브라우저 출력하기 전 : 출력할 데이터를 서버로부터 읽기 
+    		mounted(){
+    			// 공통으로 사용되는 함수 => 서버 연결 후에 데이터 읽기
+				this.dataRecv()
     		},
-    		prev(){
-    			this.curpage=this.startPage-1
-    			this.dataRecv()
-    		},
-    		next(){
-    			this.curpage=this.endPage+1
-    			this.dataRecv()
-    		},
-    		dataRecv(){
-    			axios.get('../food/list_vue.do',{
-    				params:{
-    					page:this.curpage
+    		// 사용자 정의 함수 => 이벤트 처리, 공통으로 적용 
+    		methods:{
+    			foodFind(){
+    				if(this.fd===""){
+    					this.$refs.fd.focus()
+    					return
     				}
-    			}).then(response=>{
-    				console.log(response.data)
-    				this.food_list=response.data.list
-    				this.curpage=response.data.curpage
-    				this.totalpage=response.data.totalpage
-    				this.startPage=response.data.startPage
-    				this.endPage=response.data.endPage
-    			}).catch(error=>{
-    				console.log(error.response)
-    			})
+    				this.curpage=1
+    				this.dataRecv()
+    			},
+        		range(start,end){
+        			let arr=[]
+        			let len=end-start
+        			for(let i=0;i<=len;i++){
+        				arr[i]=start
+        				start++
+        			}
+        			return arr
+        		},
+        		pageChange(page){
+        			this.curpage=page
+        			this.dataRecv()
+        		},
+        		prev(){
+        			this.curpage=this.startPage-1
+        			this.dataRecv()
+        		},
+        		next(){
+        			this.curpage=this.endPage+1
+        			this.dataRecv()
+        		},
+    			dataRecv(){
+    				axios.get('../food/find_vue.do',{
+    					params:{
+    						page:this.curpage,
+    						fd:this.fd
+    					}
+    				}).then(response=>{
+    					// 정상 수행시 데이터를 읽어온다
+    					console.log(response.data)
+    					this.food_list=response.data.list
+    					this.curpage=response.data.curpage
+    					this.totalpage=response.data.totalpage
+    					this.startPage=response.data.startPage
+    					this.endPage=response.data.endPage
+    				}).catch(error=>{
+    					// 서버에서 에러 발생 
+    					console.log(error.response)
+    				})
+    			}
     		}
-    	}
-    }).mount('#listApp')
+    		// components : Chef/Seoul, computed, watch, filter
+    	}).mount('#findApp')
     </script>
 </body>
 </html>
