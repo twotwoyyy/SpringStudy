@@ -9,4 +9,13 @@
  <definition name="*/*" extends="main">
    <put-attribute name="home" value="/WEB-INF/{1}/{2}.jsp"/>
  </definition>
+  <definition name="mypage" template="/WEB-INF/mypage/mypage_main.jsp">
+   <put-attribute name="header" value="/WEB-INF/main/header.jsp"/>
+   <put-attribute name="mypage_menu" value="/WEB-INF/mypage/mypage_menu.jsp"/>
+   <put-attribute name="mypage_home" value="/WEB-INF/mypage/mypage_home.jsp"/>
+   <put-attribute name="footer" value="/WEB-INF/main/footer.jsp"/>
+ </definition>
+ <definition name="mypage/*" extends="mypage">
+ 	<put-attribute name="mypage_home" value="/WEB-INF/mypage/{1}.jsp"/>
+ </definition>
 </tiles-definitions>
