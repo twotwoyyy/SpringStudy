@@ -56,4 +56,9 @@ public class FoodServiceImpl implements FoodService{
 	public int foodFindTotalPage(Map map) {
 		return fDao.foodFindTotalPage(map);
 	}
+
+	@Override
+	public List<FoodVO> foodTypeListData(String type) {
+		return fDao.foodTypeListData(type);
+	}
 }

@@ -30,7 +30,10 @@ public interface FoodMapper {
 	@Select("SELECT * FROM project_food_house WHERE fno=#{fno}")
 	public FoodVO foodDetailData(int fno);
 	// 예약
-	
+	@Select("SELECT fno,name,poster "
+			+"FROM project_food_house "
+			+"WHERE type LIKE '%'||#{type}||'%'")
+	public List<FoodVO> foodTypeListData(String type);
 	// 추천 => 네이버 카페
 	// 검색
 	@Select("SELECT fno,name,poster,phone,type,hit,score,address,num "
@@ -46,5 +49,7 @@ public interface FoodMapper {
 	// 총페이지
 	@Select("SELECT CEIL(COUNT(*)/12.0) FROM project_food_house WHERE address LIKE '%'||#{fd}||'%'")
 	public int foodFindTotalPage(Map map);
+	
+	
 }
 

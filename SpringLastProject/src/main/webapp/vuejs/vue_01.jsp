@@ -22,6 +22,8 @@ p{
 	text-overflow: ellipsis;
 }
 </style>
+<script src="image.js"></script>
+<script src="page.js"></script>
 </head>
 <body>
 	<div class="container">

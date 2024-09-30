@@ -40,6 +40,10 @@ public class FoodDAO {
 	public int foodFindTotalPage(Map map) {
 		return mapper.foodFindTotalPage(map);
 	}
+
+	public List<FoodVO> foodTypeListData(String type){
+		return mapper.foodTypeListData(type);
+	}
 	
 	
 	

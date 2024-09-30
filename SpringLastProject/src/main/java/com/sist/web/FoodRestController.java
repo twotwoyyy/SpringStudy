@@ -20,6 +20,9 @@ public class FoodRestController {
 		int end=rowSize*page;
 		
 		List<FoodVO> list=fService.foodListData(start, end);
+		for(FoodVO vo:list) {
+			vo.setPoster("http://www.menupan.com"+vo.getPoster());
+		}
 		int totalpage=fService.foodTotalPage();
 		
 		final int BLOCK=10;
@@ -74,6 +77,23 @@ public class FoodRestController {
 		// JSON으로 변환 후 전송
 		ObjectMapper mapper=new ObjectMapper();
 		String json=mapper.writeValueAsString(map);
+		return json;
+	}
+	
+	@GetMapping(value="food/detail_vue.do",produces = "text/plain;charset=UTF-8")
+	public String food_detail(int fno) throws Exception {
+		FoodVO vo=fService.foodDetailData(fno);
+		ObjectMapper mapper=new ObjectMapper();
+		String json=mapper.writeValueAsString(vo);
+		return json;
+	}
+	
+	@GetMapping(value="food/type_vue.do",produces = "text/plain;charset=UTF-8")
+	public String food_type(String type) throws Exception {
+		String json="";
+		List<FoodVO> list=fService.foodTypeListData(type);
+		ObjectMapper mapper=new ObjectMapper();
+		json=mapper.writeValueAsString(list);
 		return json;
 	}
 }
