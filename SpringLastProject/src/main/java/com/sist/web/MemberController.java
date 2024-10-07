@@ -22,19 +22,22 @@ public class MemberController {
 		return "member/join";
 	}
 	
-	@PostMapping("member/join_ok.do")
-	public String member_join_ok(MemberVO vo) {
-		System.out.println(vo);
-		vo.setPhone(vo.getPhone1()+"-"+vo.getPhone2());
-		// 비밀번호 암호화
-		String enPwd=encoder.encode(vo.getUserPwd());
-		vo.setUserPwd(enPwd);
-		mService.memberInsert(vo);
-		mService.memberAuthorityInsert(vo.getUserId());
-		// insert / insert 
-		return "redirect:../main/main.do";
-	}
-	
+	   @PostMapping("member/join_ok.do")
+	   public String member_join_ok(MemberVO vo)
+	   {
+		   System.out.println(vo);
+		   vo.setPhone(vo.getPhone1()+"-"+vo.getPhone2());
+		   // 비밀번호 암호화 
+		   String enPwd=encoder.encode(vo.getUserPwd());
+		   vo.setUserPwd(enPwd);
+		   
+		   mService.memberInsert(vo);
+		   mService.memberAuthorityInsert(vo.getUserId());
+		   
+		   //insert / insert
+		   
+		   return "redirect:../main/main.do";
+	   }
 	@RequestMapping("member/login.do")
 	public String member_login() {
 
