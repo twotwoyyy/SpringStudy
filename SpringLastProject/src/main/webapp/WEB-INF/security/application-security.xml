@@ -1,16 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-		http://www.springframework.org/schema/security/oauth2 https://www.springframework.org/schema/security/spring-security-oauth2.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.1.xsd">
-
-
-</beans>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+   xmlns:beans="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+      http://www.springframework.org/schema/security/oauth2 https://www.springframework.org/schema/security/spring-security-oauth2.xsd
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+   <context:component-scan base-package="com.sist.*"/>
+   <!-- 접근 권한 설정 -->
+   <!-- 페이지별 접근 권한 -->
+   <http auto-config="true" use-expressions="true">
+      <csrf disabled="true"/> <!-- 해킹방지 : 사이트 위조 (파밍) -->
+      <!-- 
+         login.do
+         hasRole('ROLE_ADMIN') => 한개만 적용 
+         ===> login.do 에는 'ROLE_ADMIN'인 애들만 접근가능
+         
+         permitAll => 모든 사람 접근 가능
+         hasAnyRole('ROLE_ADMIN','ROLE_USER') => 여러개 적용
+       -->
+      <intercept-url pattern="/member/**" access="permitAll"/>
+      <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+      <intercept-url pattern="/**" access="permitAll"/>
+      <intercept-url pattern="/member/login.do" access="permitAll"/>
+      <!-- 
+         @GetMapping("member/login_ok.do")
+         public String login_ok(String userId, String userPwd){
+            
+         }
+         id = username으로 인식
+       -->
+      <form-login login-page="/member/login.do"
+         login-processing-url="/member/login.do"
+         username-parameter="userId"
+         password-parameter="userPwd"
+         default-target-url="/main/main.do"
+         always-use-default-target="false"
+         authentication-failure-handler-ref="loginFailureHandler"
+         authentication-success-handler-ref="loginSuccessHandler"
+      />   
+      <!-- 자동 로그인 -->
+      <remember-me data-source-ref="ds" token-validity-seconds="86400"/>
+      <logout logout-url="/member/logout.do"
+         invalidate-session="true"
+         logout-success-url="/main/main.do"
+         delete-cookies="remember-me,JSESSIONID"
+      />   
+   </http>
+   <beans:bean id="loginSuccessHandler" class="com.sist.security.LoginSuccessHandler">
+      <beans:property name="defaultUrl" value="/main/main.do"/>
+   </beans:bean>
+   <beans:bean id="loginFailureHandler" class="com.sist.security.LoginFailureHandler">
+      <beans:property name="defaultFailureUrl" value="/member/login.do?login_error"/>
+   </beans:bean>
+   <!-- 로그인 처리 -->
+   <!-- 데이터 베이스 연결 -->
+   <jdbc-user-service data-source-ref="ds"
+      id="userService"
+      users-by-username-query="SELECT userId as username, userPwd as password, enabled FROM spring_member WHERE userId=?"
+      authorities-by-username-query="SELECT userId as username, authority FROM authority WHERE userId=?"
+   />
+   <!-- 인증관리자에 전송 -->
+   <authentication-manager>
+      <authentication-provider user-service-ref="userService">
+         <password-encoder ref="bcryptEncoder"/>
+      </authentication-provider>
+   </authentication-manager>
+   <!-- security 5 반드시 비밀번호 암호화를 해야 한다 -->
+   <beans:bean id="bcryptEncoder"
+      class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"
+   />
+</beans:beans>

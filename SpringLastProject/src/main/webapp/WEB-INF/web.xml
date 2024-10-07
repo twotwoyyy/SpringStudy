@@ -1,51 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
-   <!-- 
-    보안 => xml
-   -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-		 /WEB-INF/security/application-datasource.xml
-		</param-value>
-	</context-param>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
    
-	<servlet>
-		<servlet-name>dispatcher</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<!--
-		XML로 환경 설정이 된 경우 사용 -->
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/config/application-*.xml</param-value>
-		</init-param> 
-		
-		<!-- 스프링 5 : 자바로 환경설정 -->
-		<!-- <init-param>
-		  <param-name>contextClass</param-name>
-		  <param-value>
-		   org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-		  </param-value>
-		</init-param>
-		<init-param>
-		  <param-name>contextConfigLocation</param-name>
-		  <param-value>com.sist.config.MvcConfig</param-value>
-		</init-param>-->
-	</servlet>
-		
-	<servlet-mapping>
-		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
-	
-	<!--  한글 변환  -->
-	<filter>
+   <!-- 
+      보안 xml
+                      403 접근거부
+      사용자(요청) ===> FilterChain(보안-인증,인가) ===> DispatcherServlet
+                                                          | HandlerMapping
+                                                          | Model 클래스 찾기
+                                                     ViewResolver
+                                                          |
+                                                         View
+      1) 인증 : 사용자 신원 확인 => 접근 가능 여부 확인
+      2) 권한 : 사용자 권한 부여 => ROLE_USER, ROLE_MANAGER, ROLE_ADMIN
+      3) 세션관리 : 보안 => 자동으로 세션에 저장
+                         HttpSession => UserDetails
+      4) 암호화 / 복호하 : PasswordEncoder => endcode(), decode()
+      5) 로그인 / 로그아웃 / 자동로그인 => 보안 프로그램에서 처리
+         - <form-login class="" method="">
+           <form-logout class="" method="">
+           <remember-me/>
+           oauth2 => SNS를 이용한 로그인 (카카오, 네이버)
+         - 장점 : 강력한 보안 기능 (자동로그인, SNS로그인) => 재사용
+         - 단점 : 설정이 복잡 (JWT-JSON) => Spring-Boot(자동설정) - properties/yml(python)
+                                        Spring - xml
+      
+      사용자 ===> DelegatingFilterProxy => FilterChain => DispatcherServlet
+                                       |
+                                  권한 여부 403
+    -->
+   <context-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>
+       /WEB-INF/security/application-datasource.xml
+       /WEB-INF/security/application-security.xml
+      </param-value>
+   </context-param>
+   <listener>
+      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+   </listener>
+   
+   <servlet>
+      <servlet-name>dispatcher</servlet-name>
+      <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+      <!--
+      XML로 환경 설정이 된 경우 사용 -->
+      <init-param>
+         <param-name>contextConfigLocation</param-name>
+         <param-value>/WEB-INF/config/application-*.xml</param-value>
+      </init-param> 
+   </servlet>
+      
+   <servlet-mapping>
+      <servlet-name>dispatcher</servlet-name>
+      <url-pattern>*.do</url-pattern>
+   </servlet-mapping>
+   
+   <!--  한글 변환  -->
+   <filter>
       <filter-name>encodingFilter</filter-name>
       <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
       <init-param>
@@ -61,5 +74,15 @@
       <filter-name>encodingFilter</filter-name>
       <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+    <!-- 보안 적용 -->
+    <filter>
+       <filter-name>springSecurityFilterChain</filter-name>
+       <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+       <filter-name>springSecurityFilterChain</filter-name>
+       <url-pattern>/*</url-pattern>
+    </filter-mapping> 
 
 </web-app>

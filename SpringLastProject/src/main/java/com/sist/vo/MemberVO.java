@@ -1,13 +1,6 @@
 package com.sist.vo;
-
-import java.util.Date;
-
-import lombok.Data;
-
 /*
- *  이름                                      널?      유형
- ----------------------------------------- -------- ----------------------------
- USERID                                    NOT NULL VARCHAR2(20)
+ *   USERID                                    NOT NULL VARCHAR2(20)
  USERNAME                                  NOT NULL VARCHAR2(50)
  USERPWD                                   NOT NULL VARCHAR2(20)
  ENABLED                                            NUMBER(1)
@@ -20,13 +13,22 @@ import lombok.Data;
  PHONE                                              VARCHAR2(20)
  CONTENT                                            CLOB
  REGDATE                                            DATE
- MODIFIDATE                                         DATE
+ MODIFYDATE                                         DATE
  LASTLOGIN                                          DATE
+ */
+import java.util.*;
+
+import lombok.Data;
+/*
+ *    보안 : userName,userPwd 
+ *          ======== id
  */
 @Data
 public class MemberVO {
-	private String userId,userName,userPwd,sex,birthday,email,post,addr1,addr2,phone,content;
-	private int enabled;
-	private Date regdate,modifydate,lastlogin;
-	private String msg,authority;
+  private String userId,userPwd,userName,sex,post,addr1,addr2,email,
+          phone1,phone2,phone,content,birthday;
+  private int enabled;
+  private Date regdate,modifydate,lastlogin;
+  private String msg,authority;
+  
 }

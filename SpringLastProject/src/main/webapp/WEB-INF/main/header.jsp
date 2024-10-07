@@ -1,10 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.logRe{
+	cursor: pointer;
+}
+</style>
 </head>
 <body>
 <div class="top_header_area">
@@ -23,26 +30,35 @@
                 <!--  Login Register Area -->
                 <div class="col-7 col-sm-6">
                     <div class="signup-search-area d-flex align-items-center justify-content-end">
-                        <div class="login_register_area d-flex">
+                        <div class="login_register_area d-flex logRe">
+                        <c:if test="${sessionScope.userId==null }">
                             <div class="login">
-                                <a href="register.html">Sing in</a>
+                                <a href="../member/login.do">로그인</a>
                             </div>
                             <div class="register">
-                                <a href="register.html">Sing up</a>
+                                <a href="../member/join.do">회원가입</a>
                             </div>
+                         </c:if>
+                        <c:if test="${sessionScope.userId!=null }">
+                            <div class="login">
+                            	${sessionScope.userName }(<sec:authorize access="hasRole('ROLE_ADMIN')">관리자</sec:authorize>
+                            	<sec:authorize access="hasRole('ROLE_USER')">일반 사용자</sec:authorize>)님 로그인 되었습니다 &nbsp;&nbsp;
+                                <a href="../member/logout.do">로그아웃</a>
+                            </div>
+                        </c:if>
                         </div>
-                        <!-- Search Button Area -->
+                        <!-- Search Button Area 
                         <div class="search_button">
                             <a class="searchBtn" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
-                        </div>
-                        <!-- Search Form -->
+                        </div>-->
+                        <!-- Search Form 
                         <div class="search-hidden-form">
                             <form action="#" method="get">
                                 <input type="search" name="search" id="search-anything" placeholder="Search Anything...">
                                 <input type="submit" value="" class="d-none">
                                 <span class="searchBtn"><i class="fa fa-times" aria-hidden="true"></i></span>
                             </form>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -75,7 +91,7 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">회원</a>
                                     <div class="dropdown-menu" aria-labelledby="yummyDropdown">
-                                        <a class="dropdown-item" href="#">회원가입</a>
+                                        <a class="dropdown-item" href="../member/join.do">회원가입</a>
                                         <a class="dropdown-item" href="#">아이디 찾기</a>
                                         <a class="dropdown-item" href="#">비밀번호 찾기</a>
                                     </div>
