@@ -9,6 +9,18 @@
       http://www.springframework.org/schema/security/oauth2 https://www.springframework.org/schema/security/spring-security-oauth2.xsd
       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+   <!-- 
+   		보안 실행                                    통과
+   		         / member/login.do                premitAll
+   		클라이언트 ====================> security필터 ===============> 서블릿 ========> HandlerMapping ===>  ViewResolver ===> JSP 
+   		                              | web.xml             DispatcherServlet
+   		                           FilterChain
+   		       / admin/admin_main.do
+   	    클라이언트 ====================> security필터 ===============> 서블릿 ========> HandlerMapping ===>  ViewResolver ===> JSP 
+		   |                            |   	    
+   		   ==============================
+   		          접근 금지 : 403
+    -->
    <context:component-scan base-package="com.sist.*"/>
    <!-- 접근 권한 설정 -->
    <!-- 페이지별 접근 권한 -->

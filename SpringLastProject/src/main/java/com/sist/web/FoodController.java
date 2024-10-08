@@ -3,6 +3,7 @@ package com.sist.web;
 import javax.servlet.http.Cookie;
 import java.util.*;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,11 +43,13 @@ public class FoodController {
 	// => HTML / Cookie 
 	// 그래서 detail_before, detail 따로 작업하는 것임
 	@GetMapping("detail.do")
-	public String food_detail(int fno, Model model) {
+	public String food_detail(int fno, Model model, HttpSession session) {
+		String id=(String)session.getAttribute("userId");
 		FoodVO vo=fService.foodDetailData(fno);
 		
 		model.addAttribute("vo",vo);
-//		model.addAttribute("fno",fno); vo 안에 들어있기 때문에 생략 
+		model.addAttribute("fno",fno); 
+		model.addAttribute("sessionId",id);
 		return "food/detail";
 	}
 	
