@@ -250,7 +250,24 @@
 				this.dataRecv()
 			},
 			methods:{
-
+	            replyDelete(cno){
+	                axios.get('../comment/delete_vue.do',{
+	                   params:{
+	                      cno:cno
+	                      rno:this.rno,
+	                      type:this.type,
+	                   }
+	                }).then(res=>{
+	                   console.log(res.data)
+	                   this.reply_list=res.data.list
+	                   this.curpage=res.data.curpage
+	                   this.totalpage=res.data.totalpage
+	                   this.startPage=res.data.startPage
+	                   this.endPage=res.data.endPage
+	                }).catch(error=>{
+	                   console.log(error.response)
+	                })
+	             },
 				replyReplyInsert(cno){
 					let msg=$('#msg'+cno).val()
 					if(msg.trim()===""){
