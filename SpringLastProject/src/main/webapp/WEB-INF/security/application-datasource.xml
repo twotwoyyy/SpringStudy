@@ -23,6 +23,9 @@
        p:maxWait="#{db['maxWait']}"
     />
     <!-- Transaction 적용 -->
+    <tx:annotation-driven/>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="ds"/>
+    
     <!-- SqlSessionFactoryBean -->
     <bean id="ssf" 
        class="org.mybatis.spring.SqlSessionFactoryBean"

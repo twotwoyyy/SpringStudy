@@ -2,6 +2,7 @@ package com.sist.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,8 @@ import com.sist.service.CommentService;
 import com.sist.vo.CommentVO;
 
 import java.util.*;
+
+import javax.servlet.http.HttpSession;
 @RestController
 public class CommentRestController {
 	@Autowired
@@ -53,4 +56,34 @@ public class CommentRestController {
 	public String comment_list(int page, int rno, int type) throws Exception{
 		return commonsListData(page, rno, type);
 	}
+	@PostMapping(value = "comment/insert_vue.do", produces = "text/plain;charset=UTF-8")
+	public String comment_insert(CommentVO vo, HttpSession session) throws Exception {
+		// id,name 저장 => session
+		String id=(String)session.getAttribute("userId");
+		String name=(String)session.getAttribute("userName");
+		String sex=(String)session.getAttribute("sex");
+		vo.setId(id);
+		vo.setName(name);
+		vo.setSex(sex);
+		cService.commentInsert(vo);
+		return commonsListData(1, vo.getRno(), vo.getType());
+	}
+	@PostMapping(value = "comment/reply_insert_vue.do", produces = "text/plain;charset=UTF-8")
+	public String comment_reply_insert(int cno, CommentVO vo, HttpSession session) throws Exception {
+		String id=(String)session.getAttribute("userId");
+		String name=(String)session.getAttribute("userName");
+		String sex=(String)session.getAttribute("sex");
+		vo.setId(id);
+		vo.setName(name);
+		vo.setSex(sex);
+		cService.commentReplyReplyInsert(cno, vo);
+		return commonsListData(1, vo.getRno(), vo.getType());
+	}
+	@GetMapping(value = "comment/delete_vue.do", produces = "text/plain;charset=UTF-8")
+	public String comment_delete(int page, int rno, int type) throws Exception{
+		
+		return commonsListData(1, rno, type);
+	}
+	
+	
 }

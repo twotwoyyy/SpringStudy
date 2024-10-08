@@ -24,4 +24,14 @@ public class CommentServiceImpl implements CommentService{
 		return cDao.commentTotalPage(map);
 	}
 
+	@Override
+	public void commentInsert(CommentVO vo) {
+		cDao.commentInsert(vo);
+	}
+
+	@Override
+	public void commentReplyReplyInsert(int cno, CommentVO vo) {
+		cDao.commentReplyReplyInsert(cno, vo);
+		
+	}
 }
