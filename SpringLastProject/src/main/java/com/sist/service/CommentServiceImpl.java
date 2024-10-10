@@ -34,4 +34,26 @@ public class CommentServiceImpl implements CommentService{
 		cDao.commentReplyReplyInsert(cno, vo);
 		
 	}
+
+	@Override
+	public CommentVO commentDeleteInfoData(int cno) {
+		return cDao.commentDeleteInfoData(cno);
+	}
+
+	@Override
+	public void commentDelete(Map map) {
+		cDao.commentDelete(map);
+	}
+
+	@Override
+	public void foodReplyDecrement(int fno) {
+		cDao.foodReplyDecrement(fno);
+	}
+
+	@Override
+	public void commentUpdate(CommentVO vo) {
+		cDao.commentUpdate(vo);
+		
+	}
+
 }

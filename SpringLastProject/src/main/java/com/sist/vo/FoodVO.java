@@ -22,9 +22,10 @@ import lombok.Data;
  LIKECOUNT                                          NUMBER
  HIT                                                NUMBER
  */
+// replycount 추가
 @Data
 public class FoodVO {
-	private int fno,jjimcount,likecount,hit;
+	private int fno,jjimcount,likecount,hit,replycount;
 	private String name,type,phone,address,theme,poster,images,time,parking,content,rdays;
 	private Double score;
 }

@@ -1,5 +1,6 @@
 package com.sist.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -7,9 +8,9 @@ import org.apache.ibatis.annotations.Update;
 import com.sist.vo.*;
 import java.util.*;
 public interface CommentMapper {
-	@Select("SELECT cno,rno,type,id,name,msg,sex,group_tab,TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS') as dbday,num "
-			+"FROM(SELECT cno,rno,type,id,name,msg,sex,group_tab,regdate,rownum as num "
-			+ "FROM (SELECT cno,rno,type,id,name,msg,sex,group_tab,regdate "
+	@Select("SELECT cno,rno,type,id,name,msg,sex,group_tab,TO_CHAR(modifydate,'YYYY-MM-DD HH24:MI:SS') as mday,TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS') as dbday,num "
+			+"FROM(SELECT cno,rno,type,id,name,msg,sex,group_tab,modifydate,regdate,rownum as num "
+			+ "FROM (SELECT cno,rno,type,id,name,msg,sex,group_tab,modifydate,regdate "
 			+ "FROM spring_comment "
 			+ "WHERE rno=#{rno} AND type=#{type}"
 			+ "ORDER BY group_id DESC, group_step ASC)) "
@@ -42,4 +43,32 @@ public interface CommentMapper {
 	
 	@Update("UPDATE spring_comment SET depth=depth+1 WHERE cno=#{cno}")
 	public void commentDepthIncrement(int cno);
+	
+	// 삭제하기
+	@Select("SELECT group_id,group_step FROM spring_comment WHERE cno=#{cno}")
+	public CommentVO commentDeleteInfoData(int cno);
+	// MyBatis 동적 쿼리 => 여러 개의 SQL 문장을 사용자 요청에 따라 한 개의 SQL문장으로 처리
+	// 삭제하기 / 검색하기 => 관리자 모드 : 삭제 / 수정 => 체크박스
+	//                   => 등급 => 동적 쿼리 이용 
+	@Delete("<script>"
+			+ "DELETE FROM spring_comment "
+			+ "WHERE <if test=\"group_step==0\">"
+			+ "group_id=#{group_id}"
+			+ "</if> "
+			+ "<if test=\"group_step!=0\">"
+			+ "cno=#{cno} "
+			+ "</if>"
+			+ "</script>")
+	public void commentDelete(Map map);
+	// 댓글 카운트
+	@Update("UPDATE project_food_house SET replycount=replycount+1 WHERE fno=#{fno}")
+	public void foodReplyIncrement(int fno);
+	
+	@Update("UPDATE project_food_house SET replycount=replycount-1 WHERE fno=#{fno}")
+	public void foodReplyDecrement(int fno);
+	
+	// 수정하기
+	@Update("UPDATE spring_comment SET msg=#{msg},modifydate=SYSDATE WHERE cno=#{cno}")
+	public void commentUpdate(CommentVO vo);
+	
 }

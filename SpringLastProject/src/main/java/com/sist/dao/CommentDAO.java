@@ -3,6 +3,7 @@ package com.sist.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -75,6 +76,7 @@ public class CommentDAO {
 	}
 
 	public void commentInsert(CommentVO vo) {
+		mapper.foodReplyIncrement(vo.getRno());
 		mapper.commentInsert(vo);
 	}
 	
@@ -86,9 +88,28 @@ public class CommentDAO {
 		vo.setGroup_step(pvo.getGroup_step()+1);
 		vo.setGroup_tab(pvo.getGroup_tab()+1);
 		
+		mapper.foodReplyIncrement(vo.getRno());
 		mapper.commentGroupStepIncrement(pvo);
 		mapper.commentReplyReplyInsert(vo);
 		mapper.commentDepthIncrement(cno);
+	}
+	/*  MyBatis
+	 *	CRUD => INSERT / UPDATE / DELETE / SELECT 
+	 *	Spring = MyBatis
+	 *	CRUD / JOIN / 동적쿼리 / Transaction
+	 */
+	public CommentVO commentDeleteInfoData(int cno) {
+		return mapper.commentDeleteInfoData(cno);
+	}
+
+	public void commentDelete(Map map) {
+		mapper.commentDelete(map);
+	}
+	public void foodReplyDecrement(int fno) {
+		mapper.foodReplyDecrement(fno);
+	}
+	public void commentUpdate(CommentVO vo) {
+		mapper.commentUpdate(vo);
 	}
 	
 }

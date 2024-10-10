@@ -80,10 +80,23 @@ public class CommentRestController {
 		return commonsListData(1, vo.getRno(), vo.getType());
 	}
 	@GetMapping(value = "comment/delete_vue.do", produces = "text/plain;charset=UTF-8")
-	public String comment_delete(int page, int rno, int type) throws Exception{
+	public String comment_delete(int cno, int rno, int type) throws Exception{
 		
+		// 데이터베이스 연동
+		CommentVO vo=cService.commentDeleteInfoData(cno);
+		Map map=new HashMap();
+		map.put("cno", cno);
+		map.put("group_id", vo.getGroup_id());
+		map.put("group_step", vo.getGroup_step());
+		cService.commentDelete(map);
+		cService.foodReplyDecrement(rno);
 		return commonsListData(1, rno, type);
 	}
 	
+	@PostMapping(value="comment/update_vue.do", produces = "text/plain;charset=UTF-8")
+	public String comment_update(CommentVO vo) throws Exception {
+		cService.commentUpdate(vo);
+		return commonsListData(1, vo.getRno(), vo.getType());
+	}
 	
 }

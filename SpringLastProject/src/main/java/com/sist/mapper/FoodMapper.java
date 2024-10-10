@@ -14,9 +14,9 @@ public interface FoodMapper {
 	public List<FoodVO> foodHitTop5();
 	
 	// 목록 출력
-	@Select("SELECT fno,name,poster,phone,type,hit,score,num "
-			+"FROM (SELECT fno,name,poster,phone,type,hit,score,rownum as num "
-			+"FROM (SELECT fno,name,poster,phone,type,hit,score "
+	@Select("SELECT fno,name,poster,phone,type,hit,replycount,score,num "
+			+"FROM (SELECT fno,name,poster,phone,type,hit,replycount,score,rownum as num "
+			+"FROM (SELECT fno,name,poster,phone,type,hit,replycount,score "
 			+"FROM project_food_house ORDER BY fno ASC)) "
 			+"WHERE num BETWEEN #{start} AND #{end}")
 	public List<FoodVO> foodListData(@Param("start")int start,@Param("end")int end);
@@ -36,9 +36,9 @@ public interface FoodMapper {
 	public List<FoodVO> foodTypeListData(String type);
 	// 추천 => 네이버 카페
 	// 검색
-	@Select("SELECT fno,name,poster,phone,type,hit,score,address,num "
-			+"FROM (SELECT fno,name,poster,phone,type,hit,score,address,rownum as num "
-			+"FROM (SELECT fno,name,poster,phone,type,hit,score,address "
+	@Select("SELECT fno,name,poster,phone,type,hit,replycount,score,address,num "
+			+"FROM (SELECT fno,name,poster,phone,type,hit,replycount,score,address,rownum as num "
+			+"FROM (SELECT fno,name,poster,phone,type,hit,replycount,score,address "
 			+"FROM project_food_house "
 			//+"<if test='fd!=null'>
 			+"WHERE address LIKE '%'||#{fd}||'%' "

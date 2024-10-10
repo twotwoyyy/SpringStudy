@@ -163,11 +163,13 @@
 												<!-- Comment Content -->
 												<div class="comment-content">
 													<span class="comment-date text-muted">{{vo.dbday}}</span>
+													<span :id="'modify'+vo.cno" v-if="vo.dbday!=vo.mday">&nbsp;수정된 날짜: {{vo.mday}}</span>
 													<h5>{{vo.name}}</h5>
 													<p>{{vo.msg}}</p>
-													<button v-if="sessionId===vo.id" class="btn-xs btn-info" style="margin-left: 2px">Update</button> 
+													<button v-if="sessionId===vo.id" class="btn-xs btn-info update" style="margin-left: 2px"
+														@click="replyUpdateForm(vo.cno)" :id="'u'+vo.cno">Update</button> 
 													<button v-if="sessionId===vo.id" class="btn-xs btn-danger" style="margin-left: 2px" 
-													@click="replyDelete(vo.cno)">Delete</button> 
+														@click="replyDelete(vo.cno)">Delete</button> 
 													<button v-if="sessionId!==vo.id && sessionId!=''" class="btn-xs btn-success" style="margin-left: 2px">Like</button> 
 													<button class="active btn-xs btn-secondary insert" v-if="sessionId!=''" style="margin-left: 2px" 
 														@click="replyForm(vo.cno)" :id="'i'+vo.cno">Reply</button>
@@ -178,6 +180,16 @@
 																<input type="button" value="댓글" 
 																style="float: left; background-color: gray; color: white; width: 80px; height: 70px"
 																@click="replyReplyInsert(vo.cno)">
+															</td>
+														</tr>
+													</table>
+													<table class="table ups" style="display:none" :id="'up'+vo.cno">
+														<tr>
+															<td>
+																<textarea rows="4" cols="40" style="float: left;" :id="'umsg'+vo.cno">{{vo.msg}}</textarea>
+																<input type="button" value="댓글" 
+																style="float: left; background-color: gray; color: white; width: 80px; height: 94px"
+																@click="replyUpdate(vo.cno)">
 															</td>
 														</tr>
 													</table>
@@ -196,9 +208,21 @@
 															<span class="comment-date text-muted">{{vo.dbday}}</span>
 															<h5>{{vo.name}}</h5>
 															<p>{{vo.msg}}</p>
-															<button v-if="sessionId===vo.id" class="btn-xs btn-info" style="margin-left: 2px">Update</button> 
-															<button v-if="sessionId===vo.id" class="btn-xs btn-danger" style="margin-left: 2px">Delete</button> 
+															<button v-if="sessionId===vo.id" class="btn-xs btn-info" style="margin-left: 2px"
+																@click="replyUpdateForm(vo.cno)" :id="'u'+vo.cno">Update</button> 
+															<button v-if="sessionId===vo.id" class="btn-xs btn-danger" style="margin-left: 2px"
+															@click="replyDelete(vo.cno)">Delete</button> 
 															<button v-if="sessionId!==vo.id && sessionId!=''" class="btn-xs btn-success" style="margin-left: 2px">Like</button> 
+															<table class="table ups" style="display:none" :id="'up'+vo.cno">
+																<tr>
+																	<td>
+																		<textarea rows="4" cols="40" style="float: left;":id="'umsg'+vo.cno">{{vo.msg}}</textarea>
+																		<input type="button" value="댓글" 
+																		style="float: left; background-color: gray; color: white; width: 80px; height: 94px"
+																		@click="replyUpdate(vo.cno)">
+																	</td>
+																</tr>
+															</table>
 														</div>
 													</div>
 												</li>
@@ -243,19 +267,54 @@
 					type:1,
 					sessionId:'${sessionId}',
 					msg:'',
-					isReply:false
+					isReply:false,
+					upReply:false
 				}
 			},
 			mounted(){
 				this.dataRecv()
 			},
 			methods:{
+				replyUpdate(cno) {
+					let msg = $('#umsg'+cno).val()
+	                if(msg.trim() === "") {
+						$('umsg'+cno).focus()
+	                    return
+	                }
+	              axios.post('../comment/update_vue.do',null,{
+		                 params: {
+		                    cno : cno,
+		                    rno : this.rno,
+		                    type: this.type,
+							msg : msg
+						}
+					}).then(response => {
+						console.log(response.data)
+						this.reply_list= response.data.list
+						this.curpage = response.data.curpage
+						this.totalpage = response.data.totalpage
+						this.startPage = response.data.startPage
+						this.endPage = response.data.endPage
+				        const updatedComment = response.data.list.find(comment => comment.cno === cno);
+				        if (updatedComment) {
+				            // 수정된 날짜를 보여주는 방식
+				            $('#modify' + cno).text(`수정된 날짜: ${updatedComment.mday}`);
+				        }
+						$('#umsg'+cno).val("")
+						$('#up'+cno).hide()
+						$('#u'+cno).text("Update")
+
+		                  
+					}).catch(error=>{
+						console.log(error.response)
+					})
+				},
 	            replyDelete(cno){
 	                axios.get('../comment/delete_vue.do',{
 	                   params:{
-	                      cno:cno
+	                      cno:cno,
 	                      rno:this.rno,
-	                      type:this.type,
+	                      type:this.type
 	                   }
 	                }).then(res=>{
 	                   console.log(res.data)
@@ -294,6 +353,21 @@
 					}).catch(error=>{
 						console.log(error.response)
 					})
+				},
+				replyUpdateForm(cno){
+					$('.ins').hide()
+					$('.ups').hide()
+					$('.update').text('Update')
+					$('.insert').text('Reply')
+					if(this.upReply===false){
+						this.upReply=true
+						$('#up'+cno).show()
+						$('#u'+cno).text("Cancel")
+					}else{
+						this.upReply=false
+						$('#up'+cno).hide()
+						$('#u'+cno).text("Update")
+					}
 				},
 				replyForm(cno){
 					$('.ins').hide()
