@@ -56,8 +56,8 @@
             			<th class="text-center" width="20%">작성일</th>
             			<th class="text-center" width="10%">조회수</th>
             		</tr>
-            		<tr v-for="vo in board_list">
-            			<td class="text-center" width="10%">{{count}}</td>
+            		<tr v-for="(vo,index) in board_list">
+            			<td class="text-center" width="10%">{{vo.no}}</td>
             			<td width="45%"><a :href="'../freeboard/detail.do?no=' + vo.no">{{vo.subject}}</a>
             				<sup v-if="today===vo.dbday"><img src="../img/new.gif"></sup>
             			</td>
@@ -67,9 +67,9 @@
             		</tr>
             		<tr>
             			<td colspan="5" class="text-center">
-            				<button class="btn-sm btn-danger">이전</button>
+            				<button class="btn-sm btn-danger" @click="prev()">이전</button>
             				{{curpage}} page / {{totalpage}} pages
-            				<button class="btn-sm btn-danger">다음</button>
+            				<button class="btn-sm btn-danger" @click="next()">다음</button>
             			</td>
             		</tr>
             	</table>
@@ -98,6 +98,14 @@
     		// 사용자 요청에 따라 데이터를 변경
     		methods:{
     			// 1. 공통으로 적용되는 기능을 설정 => 목록 읽기
+   				prev(){
+   					this.curpage=this.curpage>1?this.curpage-1:this.curpage
+   					this.dataRecv()
+   				},
+   				next(){
+   					this.curpage=this.curpage<this.totalpage?this.curpage+1:this.curpage
+   					this.dataRecv()
+   				},
     			dataRecv(){
     				axios.get('../freeboard/list_vue.do',{
     					params:{

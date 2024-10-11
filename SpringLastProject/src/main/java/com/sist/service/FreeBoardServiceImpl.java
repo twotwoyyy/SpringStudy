@@ -35,4 +35,14 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 		fDao.freeboardDelete(no);
 		
 	}
+
+	@Override
+	public FreeBoardVO freeboardupdateData(int no) {
+		return fDao.freeboardupdateData(no);
+	}
+
+	@Override
+	public void freeboardUpdate(FreeBoardVO vo) {
+		fDao.freeboardUpdate(vo);
+	}
 }

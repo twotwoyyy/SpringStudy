@@ -34,4 +34,7 @@ public class RecipeDAO {
 		mapper.recipeHitIncrement(no);
 		return mapper.recipeDetailData(no);
 	}
+	public List<RecipeVO> recipeMakeData(String chef){
+		return mapper.recipeMakeData(chef);
+	}
 }

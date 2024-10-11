@@ -45,5 +45,20 @@ public class RecipeServiceImpl implements RecipeService{
 	public RecipeDetailVO recipeDetailData(int no) {
 		return rDao.recipeDetailData(no);
 	}
+
+	@Override
+	public List<ChefVO> chefListData(Map map) {
+		return cDao.chefListData(map);
+	}
+
+	@Override
+	public int chefTotalPage() {
+		return cDao.chefTotalPage();
+	}
+
+	@Override
+	public List<RecipeVO> recipeMakeData(String chef) {
+		return rDao.recipeMakeData(chef);
+	}
 	
 }

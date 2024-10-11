@@ -28,6 +28,13 @@ public interface FreeBoardMapper {
 			+ "WHERE no=#{no}")
 	public FreeBoardVO freeboardDetailData(int no);
 	// 수정하기 
+	@Select("SELECT no, subject, content FROM spring_freeboard "
+			+ "WHERE no=#{no}")
+	public FreeBoardVO freeboardupdateData(int no);
+
+	@Update("UPDATE spring_freeboard SET subject=#{subject},content=#{content} WHERE no=#{no}")
+	public void freeboardUpdate(FreeBoardVO vo);
+	
 	// 삭제하기
 	@Delete("DELETE FROM spring_freeboard WHERE no=#{no}")
 	public void freeboardDelete(int no);

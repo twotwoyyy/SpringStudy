@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sist.service.*;
 import com.sist.vo.*;
 
+import oracle.jdbc.proxy.annotation.Post;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -42,7 +44,7 @@ public class FreeBoardRestController {
 		
 		return json;
 	}
-	
+	// 추가하기
 	@PostMapping(value = "insert_vue.do", produces = "text/plain;charset=UTF-8")
 	// ResponseEntity<List> => react 
 	public String freeboard_insert(FreeBoardVO vo, HttpSession session) {
@@ -72,6 +74,29 @@ public class FreeBoardRestController {
 		String json=mapper.writeValueAsString(vo);
 		// 전송 
 		return json;
+	}
+	// 수정하기 
+	@GetMapping(value = "update_vue.do", produces = "text/plain;charset=UTF-8")
+	public String freeboard_update(int no) throws Exception {
+		FreeBoardVO vo=fService.freeboardupdateData(no);
+		ObjectMapper mapper=new ObjectMapper();
+		String json=mapper.writeValueAsString(vo);
+		return json;
+	}
+	@PostMapping(value = "update_ok_vue.do", produces = "text/plain;charset=UTF-8")
+	public String freeboard_update_ok(FreeBoardVO vo) throws Exception {
+		String result="";
+		try {
+//			FreeBoardVO vo=new FreeBoardVO();
+//			vo.setNo(no);
+//			vo.setSubject(subject);
+//			vo.setContent(content); => VO로 받지 않고 int no,String subject,String content로 각각 받을 경우
+			fService.freeboardUpdate(vo);
+			result="yes";
+		}catch(Exception ex) {
+			result=ex.getMessage();
+		}
+		return result;
 	}
 	// 삭제하기
 	@GetMapping(value = "delete_vue.do", produces = "text/plain;charset=UTF-8")

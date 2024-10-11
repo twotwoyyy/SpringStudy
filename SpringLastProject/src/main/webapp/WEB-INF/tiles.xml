@@ -9,6 +9,12 @@
  <definition name="*/*" extends="main">
    <put-attribute name="home" value="/WEB-INF/{1}/{2}.jsp"/>
  </definition>
+ 	<!-- 
+ 		site/chat/chat
+ 	 -->
+ <definition name="*/*/*" extends="main">
+   <put-attribute name="home" value="/{1}/{2}/{3}.jsp"/>
+ </definition>
 <!-- <definition name="mypage" template="/WEB-INF/mypage/mypage_main.jsp">
    <put-attribute name="header" value="/WEB-INF/main/header.jsp"/>
    <put-attribute name="mypage_menu" value="/WEB-INF/mypage/mypage_menu.jsp"/>

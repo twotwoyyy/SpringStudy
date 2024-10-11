@@ -68,10 +68,77 @@
 				}
 			},
 			mounted(){
-				
+				axios.get('../freeboard/update_vue.do',{
+					params:{
+						no:this.no
+					}
+				}).then(res=>{
+					console.log(res.data)
+					this.subject=res.data.subject
+					this.content=res.data.content
+					// 변수 값이 갱신 => v-model로 값을 전송 => HTML값을 변경해서 출력 
+					/*
+						res=>{
+							config:{}, => res.config
+							data:{subject:'',content:''}, => res.data (실제 서버에서 전송한 값)
+							header:{} => res.header
+						}
+						
+						res.data={subject:'',content:''} => 객체
+						data.subject => 로 가져올 수 있다 (멤버 변수이기에)
+					*/
+				}).catch(error=>{
+					console.log(error.response)
+				})
 			},
 			methods:{
-				
+				// 버튼 => 사용자 요청 처리 
+				boardUpdate(){
+					if(this.subject===""){
+						this.$refs.subject.focus()
+						return
+					}
+					if(this.content===""){
+						this.$refs.content.focus()
+						return
+					}
+					/*
+						$.ajax({
+							type:'post',
+							url:'',
+							data:{},
+							success:function(response){
+								
+							}
+						})
+						// Rest => GET(SELECT)/POST(INSERT)/PUT(UPDATE)/DELETE(DELETE)
+						           
+						// RestFul
+						axios({
+							type:
+							url:
+						})
+					*/
+					// 서버로 전송
+					axios.post('../freeboard/update_ok_vue.do',null,{
+						params:{
+							no:this.no,
+							subject:this.subject,
+							content:this.content
+						}
+					}).then(res=>{
+						// then((res)=>{}) 대신 화살표 함수
+						console.log(res.data)
+						if(res.data==="yes"){
+							alert("글이 수정되었습니다.")
+							location.href="../freeboard/detail.do?no="+this.no
+						}else{
+							alert(res.data)
+						}
+					}).catch(error=>{
+						console.log(error.response)
+					})
+				}
 			}
 		}).mount('#updateApp')
 	</script>

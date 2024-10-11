@@ -1,5 +1,7 @@
 package com.sist.dao;
 
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.sist.mapper.*;
@@ -26,5 +28,13 @@ public class FreeBoardDAO {
 	}
 	public void freeboardDelete(int no) {
 		mapper.freeboardDelete(no);
+	}
+
+	public FreeBoardVO freeboardupdateData(int no) {
+		return mapper.freeboardupdateData(no);
+	}
+
+	public void freeboardUpdate(FreeBoardVO vo) {
+		mapper.freeboardUpdate(vo);
 	}
 }
