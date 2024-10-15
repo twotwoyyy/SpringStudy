@@ -10,7 +10,15 @@ public class MypageController {
 		return "mypage";
 	}
 	@GetMapping("mypage/mypage_reserve.do")
-	public String mupage_reserve() {
+	public String mypage_reserve() {
 		return "mypage/mypage_reserve";
+	}
+	@GetMapping("mypage/mypage_cart.do")
+	public String mypage_cart() {
+		return "mypage/mypage_cart";
+	}
+	@GetMapping("mypage/mypage_buy.do")
+	public String mypage_buy() {
+		return "mypage/mypage_buy";
 	}
 }
