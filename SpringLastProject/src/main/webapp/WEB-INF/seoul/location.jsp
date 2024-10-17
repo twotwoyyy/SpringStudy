@@ -54,7 +54,7 @@ h4{
                     <div class="single-post wow fadeInUp" data-wow-delay="0.1s">
                         <!-- Post Thumb -->
                         <div class="post-thumb">
-                        	<a :href="'../seoul/detail.do?no='+vo.no">
+                        	<a :href="'../seoul/location_detail.do?no='+vo.no">
                             	<img :src="vo.poster" style="width: 350px;height: 250px" onerror="../img/noimg.jpg">
                         	</a>
                         </div>

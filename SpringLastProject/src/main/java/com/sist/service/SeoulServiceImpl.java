@@ -22,10 +22,10 @@ public class SeoulServiceImpl implements SeoulService{
 		return sDao.seoulNatureListData(map);
 	}
 
-	@Override
+	/*@Override
 	public List<SeoulVO> seoulShopListData(Map map) {
 		return sDao.seoulShopListData(map);
-	}
+	}*/
 
 	@Override
 	public int seoulLocationTotalPage() {
@@ -37,10 +37,40 @@ public class SeoulServiceImpl implements SeoulService{
 		return sDao.seoulLNatureTotalPage();
 	}
 
+	/*@Override
+	public int seoulShopTotalPage() {
+		return sDao.seoulShopTotalPage();
+	}*/
+
+	@Override
+	public SeoulVO seoulLocationDetailData(int no) {
+		return sDao.seoulLocationDetailData(no);
+	}
+
+	@Override
+	public SeoulVO seoulNatureDetailData(int no) {
+		return sDao.seoulNatureDetailData(no);
+	}
+
+	@Override
+	public List<SeoulVO> seoulShopListData(Map map) {
+		return sDao.seoulShopListData(map);
+	}
+
 	@Override
 	public int seoulShopTotalPage() {
 		return sDao.seoulShopTotalPage();
 	}
+
+	@Override
+	public SeoulVO seoulShopDetailData(Map map) {
+		return sDao.seoulShopDetailData(map);
+	}
+
+	/*@Override
+	public SeoulVO seoulShopDetailData(int no) {
+		return sDao.seoulShopDetailData(no);
+	}*/
 	
 	
 }
