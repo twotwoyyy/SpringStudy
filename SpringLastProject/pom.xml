@@ -27,6 +27,12 @@
 		    <artifactId>selenium-java</artifactId>
 		    <version>4.17.0</version>
 		</dependency>
+		<!-- mySql -->
+		<dependency>
+		    <groupId>com.mysql</groupId>
+		    <artifactId>mysql-connector-j</artifactId>
+		    <version>8.0.33</version>
+		</dependency>
 		
 		<!-- WebSocket -->
 		<dependency>
