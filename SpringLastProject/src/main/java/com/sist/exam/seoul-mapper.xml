@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.exam.seoul-mapper">
+	<select id="seoulListData" resultType="SeoulVO" parameterType="int">
+		SELECT no,title,address 
+		FROM seoul_location 
+		ORDER BY no ASC
+		LIMIT #{start},10
+	</select>
+	<!-- 
+		mySql에서 바뀐 점
+		
+		NVL       ==> ifnull
+		TO_CHAR   ==> dateformat
+		
+	 -->
+	<select id="seoulTotalPage" resultType="int">
+		SELECT CEIL(COUNT(*)/10.0) FROM seoul_location
+	</select>
+</mapper>
